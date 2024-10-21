@@ -7,17 +7,17 @@ public class OptionsParser {
 
     public static MoveDirection[] parse(String[] args) {
         MoveDirection[] directions = new MoveDirection[args.length];
-        int i = 0;
+        int MovesCounter = 0;
         for (String arg : args) {
             switch (arg) {
-                case "f" -> directions[i] = MoveDirection.FORWARD;
-                case "b" -> directions[i] = MoveDirection.BACKWARD;
-                case "l" -> directions[i] = MoveDirection.LEFT;
-                case "r" -> directions[i] = MoveDirection.RIGHT;
-                default -> i-=1;
+                case "f" -> directions[MovesCounter] = MoveDirection.FORWARD;
+                case "b" -> directions[MovesCounter] = MoveDirection.BACKWARD;
+                case "l" -> directions[MovesCounter] = MoveDirection.LEFT;
+                case "r" -> directions[MovesCounter] = MoveDirection.RIGHT;
+                default -> MovesCounter-=1;
             }
-            i++;
+            MovesCounter++;
         }
-        return Arrays.copyOfRange(directions, 0, i);
+        return Arrays.copyOfRange(directions, 0, MovesCounter);
     }
 }
