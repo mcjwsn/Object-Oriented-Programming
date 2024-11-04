@@ -3,6 +3,10 @@ import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.MapDirection;
 import static agh.ics.oop.OptionsParser.parse;
+import agh.ics.oop.model.Animal;
+
+import java.util.List;
+
 public class World {
     public static void run(MoveDirection[] args){
         //System.out.println("Zwierzak idzie do przodu");
@@ -38,5 +42,14 @@ public class World {
 
         //System.out.println(MapDirection.NORTH.previous());
         //System.out.println(MapDirection.SOUTH.next());
+
+
+        //Animal zwierze = new Animal();
+        //System.out.println(zwierze);
+
+//        List<MoveDirection> directions = OptionsParser.parse(args);
+//        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
+//        Simulation simulation = new Simulation(directions,positions);
+//        simulation.run(); //dziala poprawnie
         }
 }

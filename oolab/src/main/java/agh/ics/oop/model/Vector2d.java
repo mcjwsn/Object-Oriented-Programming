@@ -2,7 +2,7 @@ package agh.ics.oop.model;
 
 import java.util.Objects;
 
-public class Vector2d {
+public class Vector2d { // mozna zmienic na rekord i bedzie git, bez getterow
     private final int x,y;
 
     public Vector2d(int x, int y) {
@@ -51,18 +51,21 @@ public class Vector2d {
         return new Vector2d(-this.x, -this.y);
     }
 
-    public boolean equals(Object other){
-        if (this == other){ return true;}
-        if(!(other instanceof  Vector2d)) {return false;}
-
-        Vector2d vector2d = (Vector2d) other;
-
-        return this.x == vector2d.getX() && this.y == vector2d.getY();
-    }
     //public int hashCode() {
     //    return 31 * x + y;
     //}
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector2d vector2d = (Vector2d) o;
+        return x == vector2d.x && y == vector2d.y;
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(this.x, this.y);
+        return Objects.hash(x, y);
     }
 }
