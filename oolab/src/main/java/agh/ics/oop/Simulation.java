@@ -32,7 +32,7 @@ public class Simulation {
 
     }
     public List<Animal> getAnimals() {
-        return animals;
+        return List.copyOf(animals); // collections.unmodifiableList
     }
 }
 
