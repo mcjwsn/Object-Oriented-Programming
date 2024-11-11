@@ -20,7 +20,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return String.format("Animal orientation %s, position %s", orientation, position);
+        return String.valueOf(orientation);
     }
 
     public Vector2d getPosition() {
