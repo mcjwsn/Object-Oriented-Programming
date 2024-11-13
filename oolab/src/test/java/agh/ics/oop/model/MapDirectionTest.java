@@ -5,16 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MapDirectionTest {
-    // Tak samo jak w innych nie oplaca sie tutaj robic specjalnie pod given/when/then
-    // Przyklado z uzyciem given when then
-    //void ChangeDirectionToNextOne()
-    //{
-    //Given
-    // MapDirection north = MapDirection.NORTH;
-    //When & Then
-    // assertEquals(MapDirection.EAST, north.next());
-    //}
-    // Ostatni test rozbudowany o cale given when then
     @Test
     void ChangeDirectionToNextOne(){
         assertEquals(MapDirection.EAST, MapDirection.NORTH.next());
@@ -31,10 +21,10 @@ public class MapDirectionTest {
     }
     @Test
     void ChangingDirectionToString(){
-        assertEquals("Wschod", MapDirection.EAST.toString());
-        assertEquals("Poludnie", MapDirection.SOUTH.toString());
-        assertEquals("Zachod", MapDirection.WEST.toString());
-        assertEquals("Polnoc", MapDirection.NORTH.toString());
+        assertEquals("E", MapDirection.EAST.toString());
+        assertEquals("S", MapDirection.SOUTH.toString());
+        assertEquals("W", MapDirection.WEST.toString());
+        assertEquals("N", MapDirection.NORTH.toString());
     }
     @Test
     void ChangingDirectionToUnitVector()

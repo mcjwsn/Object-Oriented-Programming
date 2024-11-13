@@ -7,11 +7,10 @@ import agh.ics.oop.model.MoveDirection;
 public class Animal {
     private MapDirection orientation;
     private Vector2d position;
-    private final static Vector2d UPPER_MAX = new Vector2d(4,4);
-    private final static Vector2d LOWER_MAX = new Vector2d(0,0);
+
 
     public Animal() {
-        this.orientation = MapDirection.NORTH; // mozna ustawic w jednmy miejscu this(new Vector2d(x,y));
+        this.orientation = MapDirection.NORTH;
         this.position = new Vector2d(2,2);
     }
     public Animal(MapDirection orientation, Vector2d position){
@@ -21,13 +20,13 @@ public class Animal {
 
     @Override
     public String toString() {
-        return String.format("Animal orientation %s, position %s", orientation, position);
+        return String.valueOf(orientation);
     }
 
     public Vector2d getPosition() {
         return position;
     }
-    // te dwie funckje przydadza sie do testow
+
     public MapDirection getOrientation() {
         return orientation;
     }
@@ -38,23 +37,19 @@ public class Animal {
 
 
 
-    public void move (MoveDirection direction){
+    public void move (MoveDirection direction, RectangularMap map){
         switch (direction){
             case RIGHT -> this.orientation = this.orientation.next();
             case LEFT -> this.orientation = this.orientation.previous();
             case FORWARD -> {
                 Vector2d newPosition = this.position.add(this.orientation.toUnitVector());
-                if (isAbleToMove(newPosition)){
+                if (map.canMoveTo(newPosition)){
                     this.position = newPosition;
                 };}
             case BACKWARD -> {Vector2d newPosition = this.position.subtract(this.orientation.toUnitVector());
-                if(isAbleToMove(newPosition)){
+                if(map.canMoveTo(newPosition)){
                     this.position = newPosition;
                 };}
             }
-    }
-    // czy nie wyjdzie poza mape
-    public boolean isAbleToMove(Vector2d position) {
-        return position.precedes(UPPER_MAX) && position.follows(LOWER_MAX);
     }
 }

@@ -1,9 +1,7 @@
 package agh.ics.oop;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.MapDirection;
+import agh.ics.oop.model.*;
+
 import static agh.ics.oop.OptionsParser.parse;
-import agh.ics.oop.model.Animal;
 
 import java.util.List;
 
@@ -46,10 +44,10 @@ public class World {
 
         //Animal zwierze = new Animal();
         //System.out.println(zwierze);
-
-//        List<MoveDirection> directions = OptionsParser.parse(args);
-//        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-//        Simulation simulation = new Simulation(directions,positions);
-//        simulation.run(); //dziala poprawnie
+        RectangularMap map = new RectangularMap(5,5);
+        List<MoveDirection> directions = OptionsParser.parse(args);
+        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
+        Simulation simulation = new Simulation(directions,positions,map);
+        simulation.run();
         }
 }
