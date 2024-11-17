@@ -51,4 +51,6 @@ public class RectangularMap implements WorldMap {
     public String toString() {
         return visualizer.draw(lowerLeft, upperRight);
     }
+
+
 }

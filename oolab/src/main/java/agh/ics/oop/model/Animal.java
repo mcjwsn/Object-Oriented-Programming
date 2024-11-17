@@ -1,10 +1,8 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.MapDirection;
-import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.World;
 
-public class Animal {
+public class Animal implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
 
@@ -23,6 +21,7 @@ public class Animal {
         return String.valueOf(orientation);
     }
 
+    @Override
     public Vector2d getPosition() {
         return position;
     }
@@ -37,14 +36,14 @@ public class Animal {
 
 
 
-    public void move (MoveDirection direction, RectangularMap map){
+    public void move (MoveDirection direction, WorldMap map){
         switch (direction){
             case RIGHT -> this.orientation = this.orientation.next();
             case LEFT -> this.orientation = this.orientation.previous();
             case FORWARD -> {
                 Vector2d newPosition = this.position.add(this.orientation.toUnitVector());
                 if (map.canMoveTo(newPosition)){
-                    this.position = newPosition;
+                    this.position =newPosition;
                 };}
             case BACKWARD -> {Vector2d newPosition = this.position.subtract(this.orientation.toUnitVector());
                 if(map.canMoveTo(newPosition)){
