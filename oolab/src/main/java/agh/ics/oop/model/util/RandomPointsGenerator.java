@@ -1,55 +1,58 @@
 package agh.ics.oop.model.util;
 
-import agh.ics.oop.model.*;
-import java.util.Collections;
+import agh.ics.oop.model.Vector2d;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Random;
 
-public class RandomPointsGenerator implements Iterable<Vector2d>{
-    private final List<Vector2d> positions;
-    public RandomPointsGenerator(int maxWidth, int maxHeight, int grassCount) {
-        if (grassCount > maxWidth * maxHeight) {
-            throw new IllegalArgumentException("Licz pol trawy nie moze byc wieksza od liczby pol na mapie");
+public class RandomPointsGenerator implements Iterable<Vector2d> {
+    private final List<Vector2d> availablePositions;
+    private final int count;
+    private final Random random;
+
+    public RandomPointsGenerator(int maxWidth, int maxHeight, int count) {
+        if (count > maxWidth * maxHeight) {
+            throw new IllegalArgumentException("Liczba pozycji nie może być większa niż liczba wszystkich możliwych pól.");
         }
-        positions = new ArrayList<>();
+
+        this.availablePositions = generateAllPositions(maxWidth, maxHeight);
+        this.count = count;
+        this.random = new Random();
+    }
+
+    private List<Vector2d> generateAllPositions(int maxWidth, int maxHeight) {
+        List<Vector2d> positions = new ArrayList<>();
         for (int x = 0; x < maxWidth; x++) {
             for (int y = 0; y < maxHeight; y++) {
                 positions.add(new Vector2d(x, y));
             }
         }
-
-        Collections.shuffle(positions, new Random());
-
-        while (positions.size() > grassCount) {
-            positions.removeLast();
-        }
+        return positions;
     }
+
     @Override
     public Iterator<Vector2d> iterator() {
-        return new RandomPositionIterator(positions);
-    }
-    private static class RandomPositionIterator implements Iterator<Vector2d> {
-        private final List<Vector2d> positions;
-        private int currentIndex = 0;
+        return new Iterator<Vector2d>() {
+            private int generatedCount = 0;
 
-        public RandomPositionIterator(List<Vector2d> positions) {
-            this.positions = positions;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return currentIndex < positions.size();
-        }
-
-        @Override
-        public Vector2d next() {
-            if (!hasNext()) {
-                throw new IllegalStateException("Wszystkie punkty zostały użyte");
+            @Override
+            public boolean hasNext() {
+                return generatedCount < count;
             }
-               return positions.get(currentIndex++);
-        }
+
+            @Override
+            public Vector2d next() {
+                if (!hasNext()) {
+                    throw new UnsupportedOperationException("Nie ma wiecej punktow");
+                }
+
+                int randomIndex = random.nextInt(availablePositions.size());
+                Vector2d position = availablePositions.remove(randomIndex);
+
+                generatedCount++;
+                return position;
+            }
+        };
     }
-        // przechodzi testy, dziala (chyba)
 }
