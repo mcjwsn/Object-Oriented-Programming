@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
+import agh.ics.oop.model.util.IncorrectPositionException;
 import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
@@ -13,12 +14,12 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     @Override
-    public boolean place(Animal animal) {
+    public boolean place(Animal animal) throws IncorrectPositionException {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
             return true;
         }
-        return false;
+        throw new IncorrectPositionException(animal.getPosition());
     }
 
     @Override
