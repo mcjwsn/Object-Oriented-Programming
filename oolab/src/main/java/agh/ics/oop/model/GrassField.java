@@ -1,11 +1,12 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.RandomPointsGenerator;
 import java.util.*;
 
 public class GrassField extends AbstractWorldMap{
-    private final Map<Vector2d, Grass> mapofGrass;
+    private final Map<Vector2d, Grass> mapOfGrass = new HashMap<>();
     public GrassField(int grassNumber) {
-        this.mapofGrass = new HashMap<>();
+        /*this.mapofGrass = new HashMap<>();
         Random random = new Random();
         int i=0;
         while (i < grassNumber) {
@@ -22,7 +23,10 @@ public class GrassField extends AbstractWorldMap{
             if (!flag) {
                 this.mapofGrass.put(new Vector2d(x,y), new Grass(new Vector2d(x, y)));
                 i++;
-            }
+            }*/
+        RandomPointsGenerator randomPositionGenerator = new RandomPointsGenerator((int) Math.sqrt(10 * grassNumber), (int) Math.sqrt(10 * grassNumber), grassNumber);
+        for (Vector2d grassPosition : randomPositionGenerator) {
+            mapOfGrass.put(grassPosition, new Grass(grassPosition));
 
         }
     }
@@ -31,7 +35,7 @@ public class GrassField extends AbstractWorldMap{
     public WorldElement objectAt(Vector2d position) {
         WorldElement object = super.objectAt(position);
         if(object != null) return object;
-        return mapofGrass.get(position);
+        return mapOfGrass.get(position);
     }
 
     @Override
@@ -49,7 +53,7 @@ public class GrassField extends AbstractWorldMap{
     @Override
     public List<WorldElement> getElements() {
         List<WorldElement> elements = super.getElements();
-        elements.addAll(mapofGrass.values());
+        elements.addAll(mapOfGrass.values());
         return elements;
     }
 }
