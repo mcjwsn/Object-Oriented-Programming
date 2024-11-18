@@ -6,28 +6,13 @@ import java.util.*;
 public class GrassField extends AbstractWorldMap{
     private final Map<Vector2d, Grass> mapOfGrass = new HashMap<>();
     public GrassField(int grassNumber) {
-        /*this.mapofGrass = new HashMap<>();
-        Random random = new Random();
-        int i=0;
-        while (i < grassNumber) {
-            int x = random.nextInt((int) Math.sqrt(10 * grassNumber));
-            int y = random.nextInt((int) Math.sqrt(10 * grassNumber));
+        generateGrass(grassNumber);
+    }
 
-            boolean flag = false;
-            for (Vector2d position: mapofGrass.keySet()) {
-                if (Objects.equals(position, new Vector2d(x, y))) {
-                    flag = true;
-                    break;
-                }
-            }
-            if (!flag) {
-                this.mapofGrass.put(new Vector2d(x,y), new Grass(new Vector2d(x, y)));
-                i++;
-            }*/
+    private void generateGrass(int grassNumber){
         RandomPointsGenerator randomPositionGenerator = new RandomPointsGenerator((int) Math.sqrt(10 * grassNumber), (int) Math.sqrt(10 * grassNumber), grassNumber);
         for (Vector2d grassPosition : randomPositionGenerator) {
             mapOfGrass.put(grassPosition, new Grass(grassPosition));
-
         }
     }
 
@@ -39,9 +24,22 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
+    public boolean isOccupied(Vector2d position){
+        if(!super.isOccupied(position)){
+            return mapOfGrass.containsKey(position);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean canMoveTo(Vector2d position) {
+        return !animals.containsKey(position);
+    }
+
+    @Override
     public String toString() {
-        Vector2d bottom = new Vector2d(upperRight.getX(), upperRight.getY());
-        Vector2d top = new Vector2d(lowerLeft.getX(), lowerLeft.getY());
+        Vector2d bottom = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Vector2d top = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
         List<WorldElement> elements = getElements();
         for (WorldElement element: elements) {
             bottom = bottom.lowerLeft(element.getPosition());
