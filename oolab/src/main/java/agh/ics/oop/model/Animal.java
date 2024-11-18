@@ -36,7 +36,7 @@ public class Animal implements WorldElement {
 
 
 
-    public void move (MoveDirection direction, WorldMap map){
+    public void move (MoveDirection direction, MoveValidator map){
         switch (direction){
             case RIGHT -> this.orientation = this.orientation.next();
             case LEFT -> this.orientation = this.orientation.previous();
