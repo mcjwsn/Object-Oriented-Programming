@@ -77,6 +77,17 @@ class RectangularMapTest {
         assertFalse(map.canMoveTo(new Vector2d(2, 3)));
     }
 
-
-    // zakladam ze visualizer dziala i nie bede go testowal
+    @Test
+    public void IsNumberOfElementsOnTheMapCorrect(){
+        WorldMap map = new RectangularMap(10, 5);
+        Animal animal1 = new Animal();
+        Animal animal2 = new Animal(MapDirection.SOUTH, new Vector2d(2, 3));
+        Animal animal3 = new Animal(MapDirection.NORTH, new Vector2d(3, 2));
+        Animal animal4 = new Animal(MapDirection.SOUTH, new Vector2d(4, 2));
+        map.place(animal1);
+        map.place(animal2);
+        map.place(animal3);
+        map.place(animal4);
+        assertEquals(4, map.getElements().size());
+    }
 }
