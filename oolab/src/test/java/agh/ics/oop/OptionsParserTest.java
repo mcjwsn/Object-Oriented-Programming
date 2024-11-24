@@ -57,7 +57,6 @@ class OptionsParserTest {
     void parse_X_toNothing(){
         String[] args = {"x"};
         List<MoveDirection> expected = List.of();
-        List<MoveDirection> actual = OptionsParser.parse(args);
-        assertEquals(expected, actual);
+        assertThrows(IllegalArgumentException.class, () -> OptionsParser.parse(args));
     }
 }
