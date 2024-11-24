@@ -8,10 +8,6 @@ public class RectangularMap extends AbstractWorldMap {
         this.lowerLeft = new Vector2d(0,0);
         this.upperRight = new Vector2d(width-1, height-1);
     }
-    @Override
-    public String toString() {
-        return visualizer.draw(this.lowerLeft, this.upperRight);
-    }
 
     public RectangularMap(){
         this(5,5);
