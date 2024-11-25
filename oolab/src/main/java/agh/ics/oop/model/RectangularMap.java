@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.*;
 
 public class RectangularMap extends AbstractWorldMap {
     private final Vector2d lowerLeft;

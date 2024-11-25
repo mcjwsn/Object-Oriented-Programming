@@ -1,7 +1,7 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.IncorrectPositionException;
-import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.*;
+
 import java.util.List;
 
 /*

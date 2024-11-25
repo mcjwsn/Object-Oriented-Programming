@@ -1,8 +1,8 @@
 package agh.ics.oop.model;
 import agh.ics.oop.model.util.*;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.*;
+import agh.ics.oop.model.util.IncorrectPositionException;
 
 public class GrassFieldTest {
     @Test
