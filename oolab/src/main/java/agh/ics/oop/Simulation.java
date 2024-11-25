@@ -1,6 +1,7 @@
 package agh.ics.oop;
 import agh.ics.oop.model.*;
-import agh.ics.oop.model.util.IncorrectPositionException;
+import agh.ics.oop.model.util.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
