@@ -8,11 +8,7 @@ class RectangularMapTest {
     public void DoesMapWorkBasic(){
         RectangularMap map = new RectangularMap(5, 5);
         Animal animal = new Animal();
-        try {
-            assertTrue(map.place(animal));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
+        assertDoesNotThrow(() -> map.place(animal));
         map.move(animal, MoveDirection.FORWARD);
         assertEquals(new Vector2d(2, 3), animal.getPosition());
     }
@@ -22,11 +18,7 @@ class RectangularMapTest {
         RectangularMap map = new RectangularMap(100, 5);
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(MapDirection.SOUTH, new Vector2d(2, 2));
-        try {
-            assertTrue(map.place(animal1));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
+        assertDoesNotThrow(() -> map.place(animal1));
         assertThrows(IncorrectPositionException.class, () -> map.place(animal2));
     }
 
@@ -35,16 +27,8 @@ class RectangularMapTest {
         RectangularMap map = new RectangularMap(10, 5);
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(MapDirection.SOUTH, new Vector2d(2, 3));
-        try {
-            assertTrue(map.place(animal1));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
-        try {
-            assertTrue(map.place(animal2));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
+        assertDoesNotThrow(() -> map.place(animal1));
+        assertDoesNotThrow(() -> map.place(animal2));
         assertTrue(map.isOccupied(new Vector2d(2, 2)));
         assertTrue(map.isOccupied(new Vector2d(2, 3)));
         assertFalse(map.isOccupied(new Vector2d(2, 4)));
@@ -56,16 +40,8 @@ class RectangularMapTest {
         RectangularMap map = new RectangularMap(4, 4);
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(MapDirection.NORTH, new Vector2d(2, 3));
-        try {
-            assertTrue(map.place(animal1));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
-        try {
-            assertTrue(map.place(animal2));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
+        assertDoesNotThrow(() -> map.place(animal1));
+        assertDoesNotThrow(() -> map.place(animal2));
         assertEquals(animal1, map.objectAt(new Vector2d(2, 2)));
         assertEquals(animal2, map.objectAt(new Vector2d(2, 3)));
     }
@@ -74,11 +50,7 @@ class RectangularMapTest {
     public void CanMoveToOccupied(){
         RectangularMap map = new RectangularMap(5, 5);
         Animal animal1 = new Animal();
-        try {
-            assertTrue(map.place(animal1));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
+        assertDoesNotThrow(() -> map.place(animal1));
         assertTrue(map.canMoveTo(new Vector2d(2, 3)));
         assertFalse(map.canMoveTo(new Vector2d(2, 2)));
     }
@@ -88,16 +60,8 @@ class RectangularMapTest {
         RectangularMap map = new RectangularMap(55, 4);
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(MapDirection.SOUTH, new Vector2d(3, 2));
-        try {
-            assertTrue(map.place(animal1));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
-        try {
-            assertTrue(map.place(animal2));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
+        assertDoesNotThrow(() -> map.place(animal1));
+        assertDoesNotThrow(() -> map.place(animal2));
         map.move(animal1, MoveDirection.FORWARD);
         map.move(animal2, MoveDirection.FORWARD);
         assertEquals(new Vector2d(2, 3), animal1.getPosition());
@@ -109,16 +73,8 @@ class RectangularMapTest {
         RectangularMap map = new RectangularMap(10, 5);
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(MapDirection.SOUTH, new Vector2d(2, 3));
-        try {
-            assertTrue(map.place(animal1));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
-        try {
-            assertTrue(map.place(animal2));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
+        assertDoesNotThrow(() -> map.place(animal1));
+        assertDoesNotThrow(() -> map.place(animal2));
         assertFalse(map.canMoveTo(new Vector2d(2, 3)));
     }
 
@@ -129,26 +85,10 @@ class RectangularMapTest {
         Animal animal2 = new Animal(MapDirection.SOUTH, new Vector2d(2, 3));
         Animal animal3 = new Animal(MapDirection.NORTH, new Vector2d(3, 2));
         Animal animal4 = new Animal(MapDirection.SOUTH, new Vector2d(4, 2));
-        try {
-            assertTrue(map.place(animal1));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
-        try {
-            assertTrue(map.place(animal2));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
-        try {
-            assertTrue(map.place(animal3));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
-        try {
-            assertTrue(map.place(animal4));
-        } catch (IncorrectPositionException e) {
-            fail("Unexpected exception: " + e.getMessage());
-        }
+        assertDoesNotThrow(() -> map.place(animal1));
+        assertDoesNotThrow(() -> map.place(animal2));
+        assertDoesNotThrow(() -> map.place(animal3));
+        assertDoesNotThrow(() -> map.place(animal4));
         assertEquals(4, map.getElements().size());
     }
 }

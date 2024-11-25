@@ -15,11 +15,11 @@ public class Simulation {
         for (Vector2d position : positions) {
             try {
                 Animal animal = new Animal(MapDirection.NORTH, position);
-                if (map.place(animal)) {
-                    this.animals.add(animal);
-                }
+                map.place(animal);
+                this.animals.add(animal);
             } catch (IncorrectPositionException e) {
-                System.out.println("Warning: " + e.getMessage());
+                //System.out.println("Warning: " + e.getMessage());
+                e.printStackTrace();
             }
         }
         this.directions = directions;

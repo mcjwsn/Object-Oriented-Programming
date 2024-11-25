@@ -15,13 +15,12 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     @Override
-    public boolean place(Animal animal) throws IncorrectPositionException {
+    public void place(Animal animal) throws IncorrectPositionException {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
             notifyObservers("Animal placed at " + animal.getPosition());
-            return true;
-        }
-        throw new IncorrectPositionException(animal.getPosition());
+        } else{
+        throw new IncorrectPositionException(animal.getPosition());}
     }
 
     @Override
@@ -48,14 +47,13 @@ public abstract class AbstractWorldMap implements WorldMap {
         return new ArrayList<>(animals.values());
     }
 
-    public Boundary getCurrentBounds() {
-        return new Boundary(new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE),
-                new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE));
-    }
+    protected abstract Boundary getCurrentBounds();
+
 
     @Override
     public String toString() {
-        return visualizer.draw(getCurrentBounds().lowerLeft(), getCurrentBounds().upperRight());
+        Boundary currentBounds = getCurrentBounds();
+        return visualizer.draw(currentBounds.lowerLeft(), currentBounds.upperRight());
     }
 
     public void addObserver(MapChangeListener observer) {

@@ -25,13 +25,8 @@ public class World {
             Simulation simulation = new Simulation(directions, positions, map);
             simulation.run();
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+           // System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
         }
 }
-
-// Korzysci zastosowania wzorca obserwatora
-    // upraszcza zarządzanie zależnościami
-    // zwieksza elsatycznosc kodu
-    // bardziej reaktywny/responsywny system
-    // łatwiejsze dodawania nowych funkcji i ich sprawdzanie
 }

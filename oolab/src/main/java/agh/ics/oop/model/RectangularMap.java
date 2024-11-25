@@ -1,5 +1,7 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
+
 public class RectangularMap extends AbstractWorldMap {
     private final Vector2d lowerLeft;
     private final Vector2d upperRight;
@@ -18,5 +20,10 @@ public class RectangularMap extends AbstractWorldMap {
         return super.canMoveTo(position)
                 && position.follows(lowerLeft)
                 && position.precedes(upperRight);
+    }
+
+    @Override
+    public Boundary getCurrentBounds(){
+        return new Boundary(lowerLeft, upperRight);
     }
 }
