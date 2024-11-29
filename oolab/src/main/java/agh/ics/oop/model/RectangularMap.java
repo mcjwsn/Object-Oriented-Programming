@@ -5,8 +5,11 @@ import agh.ics.oop.model.util.*;
 public class RectangularMap extends AbstractWorldMap {
     private final Vector2d lowerLeft;
     private final Vector2d upperRight;
+    protected final int id;
 
     public RectangularMap(int width, int height){
+        super();
+        this.id = hashCode();
         this.lowerLeft = new Vector2d(0,0);
         this.upperRight = new Vector2d(width-1, height-1);
     }
@@ -25,5 +28,10 @@ public class RectangularMap extends AbstractWorldMap {
     @Override
     public Boundary getCurrentBounds(){
         return new Boundary(lowerLeft, upperRight);
+    }
+
+    @Override
+    public int getId(){
+        return id;
     }
 }

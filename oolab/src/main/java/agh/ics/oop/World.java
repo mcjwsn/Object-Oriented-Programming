@@ -19,11 +19,14 @@ public class World {
         try {
             List<MoveDirection> directions = OptionsParser.parse(args);
             List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-            AbstractWorldMap map = new GrassField(10);
-            // AbstractWorldMap map = new RectangularMap(5, 5);
-            map.addObserver(new ConsoleMapDisplay());
-            Simulation simulation = new Simulation(directions, positions, map);
-            simulation.run();
+            AbstractWorldMap map1 = new GrassField(10);
+            AbstractWorldMap map2 = new RectangularMap(5, 5);
+            map1.addObserver(new ConsoleMapDisplay());
+            map2.addObserver(new ConsoleMapDisplay());
+            Simulation simulation1 = new Simulation(directions, positions, map1);
+            Simulation simulation2 = new Simulation(directions, positions, map2);
+            SimulationEngine engine = new SimulationEngine(List.of(simulation1, simulation2));
+            engine.runSync();
         } catch (IllegalArgumentException e) {
            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
