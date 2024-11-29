@@ -26,7 +26,7 @@ public class World {
             Simulation simulation1 = new Simulation(directions, positions, map1);
             Simulation simulation2 = new Simulation(directions, positions, map2);
             SimulationEngine engine = new SimulationEngine(List.of(simulation1, simulation2));
-            engine.runSync();
+            engine.runAsync();
         } catch (IllegalArgumentException e) {
            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
