@@ -21,5 +21,17 @@ public class SimulationEngine {
             threads.add(thread);
             thread.start();
         }
+        awaitSimulationEnd();
+    }
+
+    public void awaitSimulationEnd() {
+        try{
+            for (Thread thread: threads){
+                thread.join();
+            }
+        }
+        catch (InterruptedException e){
+            System.out.println(e);
+        }
     }
 }

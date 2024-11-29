@@ -31,5 +31,6 @@ public class World {
            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
+        System.out.println("System zakonczyl dzialanie");
 }
 }
