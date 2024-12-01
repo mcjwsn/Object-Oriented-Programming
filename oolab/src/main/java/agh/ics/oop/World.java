@@ -32,6 +32,8 @@ public class World {
             Simulation simulation2 = new Simulation(directions, positions, map2);
             Simulation simulation3 = new Simulation(directions, positions2, map3);
             SimulationEngine engine = new SimulationEngine(List.of(simulation1, simulation2,simulation3));
+            //Thread engineThread = new Thread(engine);
+            //engineThread.start();
             //engine.runAsync();
             /*List<Simulation> simulations = new ArrayList<>();
             for (int i = 0; i < 1000; i++) {

@@ -38,10 +38,12 @@ public class SimulationEngine {
             }
             threadPool.shutdown();
             if (!threadPool.awaitTermination(10, TimeUnit.SECONDS)) {
+                System.out.println("Wymuszenie zamknietcia systemu");
                 threadPool.shutdownNow();
             }
         }
         catch (InterruptedException e){
+            Thread.currentThread().interrupt(); // reset flagi przerwania
             System.out.println(e.getMessage());
         }
     }
@@ -52,4 +54,9 @@ public class SimulationEngine {
         }
         awaitSimulationEnd();
     }
+
+//    @Override
+//    public void run() {
+//        System.out.println("Thread started.");
+//    }
 }
