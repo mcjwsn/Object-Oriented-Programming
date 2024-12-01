@@ -1,9 +1,8 @@
 package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.*;
-
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 /*
  * The interface responsible for interacting with the map of the world.
@@ -52,6 +51,6 @@ public interface WorldMap extends MoveValidator {
      */
     List<WorldElement> getElements();
 
-    int getId();
+    String getId();
 
 }

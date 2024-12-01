@@ -3,14 +3,15 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.*;
 import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
+import java.util.UUID;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer visualizer = new MapVisualizer(this);
     protected final List<MapChangeListener> observers = new ArrayList<>();
-    protected final int id;
+    protected final String id;
     public AbstractWorldMap() {
-        this.id = hashCode();
+        this.id = UUID.randomUUID().toString();
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -72,9 +73,8 @@ public abstract class AbstractWorldMap implements WorldMap {
             observer.mapChanged(this, message);
         }
     }
-
     @Override
-    public int getId(){
+    public String getId() {
         return id;
     }
 
