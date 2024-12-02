@@ -28,7 +28,6 @@ public class SimulationEngine {
             threads.add(thread);
             thread.start();
         }
-        awaitSimulationEnd();
     }
 
     public void awaitSimulationEnd() {
