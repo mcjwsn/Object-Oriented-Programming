@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.*;
+import java.util.UUID;
 
 public class RectangularMap extends AbstractWorldMap {
     private final Vector2d lowerLeft;
@@ -25,5 +26,10 @@ public class RectangularMap extends AbstractWorldMap {
     @Override
     public Boundary getCurrentBounds(){
         return new Boundary(lowerLeft, upperRight);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 }

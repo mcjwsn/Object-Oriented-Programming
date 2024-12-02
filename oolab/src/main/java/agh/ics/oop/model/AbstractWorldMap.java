@@ -1,14 +1,18 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.*;
 import agh.ics.oop.model.util.MapVisualizer;
-import agh.ics.oop.model.util.IncorrectPositionException;
 import java.util.*;
+import java.util.UUID;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer visualizer = new MapVisualizer(this);
     protected final List<MapChangeListener> observers = new ArrayList<>();
+    protected final String id;
+    public AbstractWorldMap() {
+        this.id = UUID.randomUUID().toString();
+    }
     @Override
     public boolean canMoveTo(Vector2d position) {
       return !isOccupied(position);
@@ -68,6 +72,10 @@ public abstract class AbstractWorldMap implements WorldMap {
         for (MapChangeListener observer : observers) {
             observer.mapChanged(this, message);
         }
+    }
+    @Override
+    public String getId() {
+        return id;
     }
 
 }

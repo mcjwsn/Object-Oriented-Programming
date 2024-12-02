@@ -1,8 +1,8 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.IncorrectPositionException;
-import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.*;
 import java.util.List;
+
 
 /*
  * The interface responsible for interacting with the map of the world.
@@ -50,5 +50,7 @@ public interface WorldMap extends MoveValidator {
      * Return a collection of all elements (animals and grass) on the map.
      */
     List<WorldElement> getElements();
+
+    String getId();
 
 }
