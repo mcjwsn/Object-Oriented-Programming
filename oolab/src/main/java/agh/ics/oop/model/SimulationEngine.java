@@ -21,7 +21,7 @@ public class SimulationEngine {
     public void runSync(){
         for (Simulation simulation : simulations) {
             simulation.run();
-                }}
+        }}
     public void runAsync(){
         for (Simulation simulation : simulations) {
             Thread thread = new Thread(simulation);
@@ -51,7 +51,6 @@ public class SimulationEngine {
         for (Simulation simulation : simulations) {
             threadPool.submit(simulation);
         }
-        awaitSimulationEnd();
     }
 
 //    @Override
