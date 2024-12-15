@@ -10,12 +10,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class SimulationApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
+        MapChangeListener listner = loader.getController();
         BorderPane viewRoot = loader.load();
         configureStage(primaryStage, viewRoot);
         primaryStage.show();

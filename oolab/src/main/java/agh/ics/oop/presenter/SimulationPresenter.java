@@ -2,31 +2,39 @@ package agh.ics.oop.presenter;
 
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
-import agh.ics.oop.SimulationApp;
 import agh.ics.oop.model.*;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
+import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.RowConstraints;
 
-import java.io.IOException;
 import java.util.List;
 
-import static com.sun.javafx.application.ParametersImpl.getParameters;
 
 
 public class SimulationPresenter implements MapChangeListener {
-    public Button startButton;
+    private int xMin;
+    private int yMin;
+    private int xMax;
+    private int yMax;
+    private int currentMapWidth;
+    private int currentMapHeight;
     private WorldMap worldMap;
-    public void setWorldMap(WorldMap map) {
-        this.worldMap = map;
+
+    private final int width = 25;
+    private final int height = 25;
+
+    private final int mapLimitHight = 100;
+    private final int mapLimitWidth = 100;
+
+
+    public void setWorldMap(WorldMap worldMap) {
+        this.worldMap = worldMap;
     }
     @FXML
     private Label infoLabel;
@@ -38,19 +46,21 @@ public class SimulationPresenter implements MapChangeListener {
     private Button start;
     @FXML
     private GridPane mapGrid;
-    @FXML
-    private TextField mapTextField;
 
-    public void drawMap(){
-        if (worldMap != null) {
-            infoLabel.setText(worldMap.toString());
-        }
-    };
+    private void drawMap() {
+        updateBounds();
+        xyLabel();
+        columnsFunction();
+        rowsFunction();
+        addElements();
+        mapGrid.setGridLinesVisible(true);
+    }
     @FXML
     public void onSimulationStartClicked(){
+        try{
         List<MoveDirection> directions = OptionsParser.parse(textField.getText().split(" "));
-        AbstractWorldMap map1 = new GrassField(10);
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
+        AbstractWorldMap map1 = new GrassField(15);
+        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(8,5), new Vector2d(4,4), new Vector2d(7,6));
         map1.addObserver(this);
         setWorldMap(map1);
         Simulation simulation1 = new Simulation(directions, positions, map1);
@@ -59,31 +69,69 @@ public class SimulationPresenter implements MapChangeListener {
         //infoLabel.setText("Simulation started with moves: " + moveLabel);
         new Thread(() -> {
             engine.runAsync();
-        }).start();
+        }).start();}
+        catch(Exception e){
+            infoLabel.setText(e.getMessage());
+        }
     }
-    @FXML
-    private void newGame(){
-        SimulationApp simulationApp = new SimulationApp();
-        try {
-            simulationApp.start(new Stage());
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void xyLabel(){
+        mapGrid.getColumnConstraints().add(new ColumnConstraints(width));
+        mapGrid.getRowConstraints().add(new RowConstraints(height));
+        Label label = new Label("y/x");
+        mapGrid.add(label, 0, 0);
+        GridPane.setHalignment(label, HPos.CENTER);
+    }
+    public void updateBounds(){
+        xMin = worldMap.getCurrentBounds().lowerLeft().getX();
+        yMin = worldMap.getCurrentBounds().lowerLeft().getY();
+        xMax = worldMap.getCurrentBounds().upperRight().getX();
+        yMax = worldMap.getCurrentBounds().upperRight().getY();
+        currentMapWidth = xMax - xMin + 1;
+        currentMapHeight = yMax - yMin + 1;
+    }
+    public void columnsFunction(){
+        for(int i = 0; i< currentMapWidth; i++){
+            Label label = new Label(Integer.toString(i+xMin));
+            GridPane.setHalignment(label, HPos.CENTER);
+            mapGrid.getColumnConstraints().add(new ColumnConstraints(width));
+            mapGrid.add(label, i+1, 0);
+        }
+    }
+    public void rowsFunction(){
+        for(int i=0; i<currentMapHeight; i++){
+            Label label = new Label(Integer.toString(yMax-i));
+            GridPane.setHalignment(label, HPos.CENTER);
+            mapGrid.getRowConstraints().add(new RowConstraints(height));
+            mapGrid.add(label, 0, i+1);
         }
     }
 
+    public void addElements(){
+        for (int i = xMin; i <= xMax; i++) {
+            for (int j = yMax; j >= yMin; j--) {
+                Vector2d pos = new Vector2d(i, j);
+                if (worldMap.isOccupied(pos)) {
+                    mapGrid.add(new Label(worldMap.objectAt(pos).toString()), i - xMin + 1, yMax - j + 1);
+                }
+                else {
+                    mapGrid.add(new Label(" "), i - xMin + 1, yMax - j + 1);
+                }
+                GridPane.setHalignment(mapGrid.getChildren().getLast(), HPos.CENTER);
+            }
+        }
+    }
     @Override
     public void mapChanged(WorldMap worldMap, String message) {
         setWorldMap(worldMap);
         Platform.runLater(() -> {
+            clearGrid();
             drawMap();
+            infoLabel.setText(message);
         });
     }
-    private void configureStage(Stage primaryStage, BorderPane viewRoot) {
-        var scene = new Scene(viewRoot);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Simulation app");
-        primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
-        primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
+    private void clearGrid() {
+        mapGrid.getChildren().retainAll(mapGrid.getChildren().getFirst());
+        mapGrid.getColumnConstraints().clear();
+        mapGrid.getRowConstraints().clear();
     }
-
 }
