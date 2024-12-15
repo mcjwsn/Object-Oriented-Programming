@@ -17,16 +17,6 @@ public class SimulationApp extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
         BorderPane viewRoot = loader.load();
-        SimulationPresenter presenter = loader.getController();
-        String[] args = getParameters().getRaw().toArray(new String[0]);
-        List<MoveDirection> directions = OptionsParser.parse(args);
-        AbstractWorldMap map1 = new GrassField(10);
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        Simulation simulation1 = new Simulation(directions, positions, map1);
-        SimulationEngine engine = new SimulationEngine(List.of(simulation1));
-        engine.runAsync();
-        presenter.setWorldMap(map1);
-        presenter.drawMap();
         configureStage(primaryStage, viewRoot);
         primaryStage.show();
     }
