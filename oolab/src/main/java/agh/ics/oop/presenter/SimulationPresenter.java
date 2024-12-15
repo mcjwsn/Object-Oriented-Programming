@@ -1,15 +1,36 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.model.WorldMap;
+import agh.ics.oop.OptionsParser;
+import agh.ics.oop.Simulation;
+import agh.ics.oop.model.*;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
+import java.util.List;
 
-public class SimulationPresenter {
-    private WorldMap map;
+import static com.sun.javafx.application.ParametersImpl.getParameters;
+
+
+public class SimulationPresenter implements MapChangeListener {
+    private WorldMap worldMap;
     public void setWorldMap(WorldMap map) {
-        this.map = map;
+        this.worldMap = map;
     }
-    @FXML
-    private Label infoLabel;
+
+
+    public void drawMap(){
+        System.out.println(worldMap.toString());
+    };
+    @Override
+    public void mapChanged(WorldMap worldMap, String message) {
+        setWorldMap(worldMap);
+        Platform.runLater(() -> {
+            drawMap();
+            System.out.println(message);
+        });
+    }
+
 }
