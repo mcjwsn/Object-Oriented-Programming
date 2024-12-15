@@ -19,17 +19,22 @@ public class SimulationPresenter implements MapChangeListener {
     public void setWorldMap(WorldMap map) {
         this.worldMap = map;
     }
+    @FXML
+    private Label infoLabel;
+    @FXML
+    private Label moveLabel;
 
 
     public void drawMap(){
-        System.out.println(worldMap.toString());
+        if (worldMap != null) {
+            infoLabel.setText(worldMap.toString());
+        }
     };
     @Override
     public void mapChanged(WorldMap worldMap, String message) {
         setWorldMap(worldMap);
         Platform.runLater(() -> {
             drawMap();
-            System.out.println(message);
         });
     }
 
