@@ -29,8 +29,8 @@ public class SimulationPresenter implements MapChangeListener {
     private final int width = 25;
     private final int height = 25;
 
-    private final int mapLimitHight = 100;
-    private final int mapLimitWidth = 100;
+    private static final int MAPLIMITHIGHT = 100;
+    private static final int MAPLIMITWIDTH = 100;
 
 
     public void setWorldMap(WorldMap worldMap) {
@@ -67,9 +67,7 @@ public class SimulationPresenter implements MapChangeListener {
         SimulationEngine engine = new SimulationEngine(List.of(simulation1));
         //engine.runAsync();
         //infoLabel.setText("Simulation started with moves: " + moveLabel);
-        new Thread(() -> {
-            engine.runAsync();
-        }).start();}
+        engine.runAsync();}
         catch(Exception e){
             infoLabel.setText(e.getMessage());
         }
