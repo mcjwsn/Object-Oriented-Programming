@@ -50,8 +50,8 @@ public abstract class AbstractWorldMap implements WorldMap {
     public List<WorldElement> getElements() {
         return new ArrayList<>(animals.values());
     }
-
-    protected abstract Boundary getCurrentBounds();
+    @Override
+    public abstract Boundary getCurrentBounds();
 
 
     @Override
