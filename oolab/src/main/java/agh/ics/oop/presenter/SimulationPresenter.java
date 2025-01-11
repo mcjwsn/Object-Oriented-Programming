@@ -116,7 +116,17 @@ public class SimulationPresenter implements MapChangeListener {
             for (int j = yMax; j >= yMin; j--) {
                 Optional<WorldElement> optionalElement = worldMap.objectAt(new Vector2d(i, j));
                 String labelText = optionalElement.isPresent() ? optionalElement.get().toString() : " ";
-                mapGrid.add(new Label(labelText), i - xMin + 1, yMax - j + 1);
+
+                // Zmieniamy sposób dodawania etykiet i obrazków:
+                if (optionalElement.isPresent()) {
+                    // Dodajemy tylko obrazek (WorldElementBox) w odpowiednie miejsce
+                    mapGrid.add(new WorldElementBox(optionalElement.get()), i - xMin + 1, yMax - j + 1);
+                } else {
+                    // Dodajemy puste miejsce, jeśli brak elementu
+                    mapGrid.add(new Label(" "), i - xMin + 1, yMax - j + 1);
+                }
+
+                // Zapewniamy, że elementy są wyśrodkowane
                 GridPane.setHalignment(mapGrid.getChildren().getLast(), HPos.CENTER);
             }
         }
