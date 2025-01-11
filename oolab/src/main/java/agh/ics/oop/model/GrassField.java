@@ -3,6 +3,8 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.*;
 import agh.ics.oop.model.util.RandomPointsGenerator;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap{
     private final Map<Vector2d, Grass> mapOfGrass = new HashMap<>();
@@ -52,8 +54,7 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public List<WorldElement> getElements() {
-        List<WorldElement> elements = super.getElements();
-        elements.addAll(mapOfGrass.values());
-        return elements;
+        return Stream.concat(animals.values().stream(), mapOfGrass.values().stream())
+                .collect(Collectors.toList());
     }
 }
