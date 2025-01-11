@@ -31,8 +31,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void move(Animal animal, MoveDirection direction) {
         Vector2d oldPosition = animal.getPosition();
         animal.move(direction, this);
+        Vector2d newPosition = animal.getPosition();
         animals.remove(oldPosition);
         animals.put(animal.getPosition(), animal);
+
         notifyObservers("Animal moved from " + oldPosition + " to " + animal.getPosition());
     }
 
@@ -78,4 +80,11 @@ public abstract class AbstractWorldMap implements WorldMap {
         return id;
     }
 
+    public Collection<WorldElement> getOrderedAnimals() {
+        List<WorldElement> animalList = new ArrayList<>(animals.values());
+        Comparator<WorldElement> positionComparator = Comparator.comparing((WorldElement animal) -> animal.getPosition().getX())
+                .thenComparing((WorldElement animal) -> animal.getPosition().getY());
+        animalList.sort(positionComparator);
+        return animalList;
+    }
 }

@@ -13,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -62,6 +64,10 @@ public class SimulationPresenter implements MapChangeListener {
         AbstractWorldMap map1 = new GrassField(15);
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(8,5), new Vector2d(4,4), new Vector2d(7,6));
         map1.addObserver(this);
+            map1.addObserver((map, message) -> {
+                String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                System.out.printf("%s %s%n", timestamp, message);
+            });
         setWorldMap(map1);
         Simulation simulation1 = new Simulation(directions, positions, map1);
         SimulationEngine engine = new SimulationEngine(List.of(simulation1));

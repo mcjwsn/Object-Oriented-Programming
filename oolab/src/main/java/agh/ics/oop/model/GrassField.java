@@ -6,6 +6,7 @@ import java.util.*;
 
 public class GrassField extends AbstractWorldMap{
     private final Map<Vector2d, Grass> mapOfGrass = new HashMap<>();
+    private final List<MapChangeListener> observers = new ArrayList<>();
     public GrassField(int grassNumber) {
         generateGrass(grassNumber);
     }
