@@ -32,6 +32,11 @@ public class Simulation implements Runnable {
         this.map = map;
     }
     public void run() {
+        try {
+            Thread.sleep(1700); // pierwsza inicjalizacja potrzebuje mniej/wiecej tyle czasu zeby lapac wszystko
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         for (int i = 0; i < directions.size(); i++) {
             Animal animal = animals.get(i % animals.size());
             Vector2d oldPosition = animal.getPosition(); // Pozycjaprzed ruchem
@@ -41,7 +46,6 @@ public class Simulation implements Runnable {
 
             Platform.runLater(() -> {
                 if (listener != null) {
-                    // Wywołanie istniejacego listnera
                     listener.mapChanged(map, "Animal moved to new position");
 
                     //dodanie informacji o zmianie pozycji
@@ -52,7 +56,7 @@ public class Simulation implements Runnable {
             });
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(500); // nie nadaza wizualizacja za algorytmem
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

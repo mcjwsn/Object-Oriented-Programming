@@ -3,6 +3,7 @@ package agh.ics.oop.presenter;
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
+import agh.ics.oop.presenter.WorldElementBox;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -60,22 +61,22 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     public void onSimulationStartClicked(){
         try{
-        List<MoveDirection> directions = OptionsParser.parse(textField.getText().split(" "));
-        AbstractWorldMap map1 = new GrassField(15);
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(8,5), new Vector2d(4,4), new Vector2d(7,6));
-        map1.addObserver(this);
-        map1.addObserver((map, message) -> {
-            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            System.out.printf("%s %s%n", timestamp, message);
-        });
-        FileMapDisplay fileObserver = new FileMapDisplay(map1.getId());
-        map1.addObserver(fileObserver);
-        setWorldMap(map1);
-        Simulation simulation1 = new Simulation(directions, positions, map1);
-        SimulationEngine engine = new SimulationEngine(List.of(simulation1));
-        //engine.runAsync();
-        //infoLabel.setText("Simulation started with moves: " + moveLabel);
-        engine.runAsync();}
+            List<MoveDirection> directions = OptionsParser.parse(textField.getText().split(" "));
+            AbstractWorldMap map1 = new GrassField(15);
+            List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(8,5), new Vector2d(4,4), new Vector2d(7,6));
+            map1.addObserver(this);
+            map1.addObserver((map, message) -> {
+                String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                System.out.printf("%s %s%n", timestamp, message);
+            });
+            FileMapDisplay fileObserver = new FileMapDisplay(map1.getId());
+            map1.addObserver(fileObserver);
+            setWorldMap(map1);
+            Simulation simulation1 = new Simulation(directions, positions, map1);
+            SimulationEngine engine = new SimulationEngine(List.of(simulation1));
+            //engine.runAsync();
+            //infoLabel.setText("Simulation started with moves: " + moveLabel);
+            engine.runAsync();}
         catch(Exception e){
             infoLabel.setText(e.getMessage());
         }
@@ -115,18 +116,15 @@ public class SimulationPresenter implements MapChangeListener {
         for (int i = xMin; i <= xMax; i++) {
             for (int j = yMax; j >= yMin; j--) {
                 Optional<WorldElement> optionalElement = worldMap.objectAt(new Vector2d(i, j));
+                // zeby byl tekst pod animalem wystarczy dodac to i odkomentowac w worldelementbox
                 String labelText = optionalElement.isPresent() ? optionalElement.get().toString() : " ";
 
-                // Zmieniamy sposób dodawania etykiet i obrazków:
                 if (optionalElement.isPresent()) {
-                    // Dodajemy tylko obrazek (WorldElementBox) w odpowiednie miejsce
                     mapGrid.add(new WorldElementBox(optionalElement.get()), i - xMin + 1, yMax - j + 1);
                 } else {
-                    // Dodajemy puste miejsce, jeśli brak elementu
                     mapGrid.add(new Label(" "), i - xMin + 1, yMax - j + 1);
                 }
 
-                // Zapewniamy, że elementy są wyśrodkowane
                 GridPane.setHalignment(mapGrid.getChildren().getLast(), HPos.CENTER);
             }
         }
