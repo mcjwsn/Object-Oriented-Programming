@@ -16,7 +16,7 @@ import javafx.scene.layout.RowConstraints;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
+import java.util.Optional;
 
 
 public class SimulationPresenter implements MapChangeListener {
@@ -109,17 +109,12 @@ public class SimulationPresenter implements MapChangeListener {
             mapGrid.add(label, 0, i+1);
         }
     }
-
     public void addElements(){
         for (int i = xMin; i <= xMax; i++) {
             for (int j = yMax; j >= yMin; j--) {
-                Vector2d pos = new Vector2d(i, j);
-                if (worldMap.isOccupied(pos)) {
-                    mapGrid.add(new Label(worldMap.objectAt(pos).toString()), i - xMin + 1, yMax - j + 1);
-                }
-                else {
-                    mapGrid.add(new Label(" "), i - xMin + 1, yMax - j + 1);
-                }
+                Optional<WorldElement> optionalElement = worldMap.objectAt(new Vector2d(i, j));
+                String labelText = optionalElement.isPresent() ? optionalElement.get().toString() : " ";
+                mapGrid.add(new Label(labelText), i - xMin + 1, yMax - j + 1);
                 GridPane.setHalignment(mapGrid.getChildren().getLast(), HPos.CENTER);
             }
         }
