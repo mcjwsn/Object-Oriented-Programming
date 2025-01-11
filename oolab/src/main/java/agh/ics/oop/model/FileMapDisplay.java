@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 import java.util.UUID;
 
 public class FileMapDisplay implements MapChangeListener{
-    private final UUID mapID;
-    public FileMapDisplay(UUID mapID) {
+    private final String mapID;
+    public FileMapDisplay(String mapID) {
         this.mapID = mapID;
     }
 
