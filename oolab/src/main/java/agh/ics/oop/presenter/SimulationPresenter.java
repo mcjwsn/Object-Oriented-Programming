@@ -117,7 +117,7 @@ public class SimulationPresenter implements MapChangeListener {
             for (int j = yMax; j >= yMin; j--) {
                 Optional<WorldElement> optionalElement = worldMap.objectAt(new Vector2d(i, j));
                 // zeby byl tekst pod animalem wystarczy dodac to i odkomentowac w worldelementbox
-                String labelText = optionalElement.isPresent() ? optionalElement.get().toString() : " ";
+                String labelText = optionalElement.map(Object::toString).orElse(" ");
 
                 if (optionalElement.isPresent()) {
                     mapGrid.add(new WorldElementBox(optionalElement.get()), i - xMin + 1, yMax - j + 1);

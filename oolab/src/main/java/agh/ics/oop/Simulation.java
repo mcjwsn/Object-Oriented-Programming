@@ -49,9 +49,9 @@ public class Simulation implements Runnable {
                     listener.mapChanged(map, "Animal moved to new position");
 
                     //dodanie informacji o zmianie pozycji
-                    String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                    System.out.printf("%s Animal was moved from position %s to position %s.%n",
-                            timestamp, oldPosition, newPosition);
+                   // String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                   // System.out.printf("%s Animal was moved from position %s to position %s.%n",
+                           // timestamp, oldPosition, newPosition);
                 }
             });
 
