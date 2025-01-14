@@ -4,6 +4,7 @@ import agh.ics.oop.model.util.*;
 import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
@@ -31,8 +32,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void move(Animal animal, MoveDirection direction) {
         Vector2d oldPosition = animal.getPosition();
         animal.move(direction, this);
+        Vector2d newPosition = animal.getPosition();
         animals.remove(oldPosition);
         animals.put(animal.getPosition(), animal);
+
         notifyObservers("Animal moved from " + oldPosition + " to " + animal.getPosition());
     }
 
@@ -42,8 +45,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return animals.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        //System.out.println(animals.get(position));
+        //System.out.println(Optional.ofNullable(animals.get(position)));
+        return Optional.ofNullable(animals.get(position));
     }
 
     @Override
@@ -78,4 +83,8 @@ public abstract class AbstractWorldMap implements WorldMap {
         return id;
     }
 
+    public Collection<WorldElement> getOrderedAnimals() {
+        return animals.values().stream().sorted(Comparator.comparing((WorldElement animal) -> animal.getPosition().getX())
+                .thenComparing((WorldElement animal) -> animal.getPosition().getY())).collect(Collectors.toList());
+    }
 }

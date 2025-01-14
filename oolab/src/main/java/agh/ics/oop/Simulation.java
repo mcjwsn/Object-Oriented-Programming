@@ -4,7 +4,10 @@ import agh.ics.oop.model.util.*;
 import javafx.application.Platform;
 import agh.ics.oop.presenter.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Simulation implements Runnable {
@@ -28,24 +31,40 @@ public class Simulation implements Runnable {
         this.directions = directions;
         this.map = map;
     }
-    public void run(){
-            for(int i = 0; i < directions.size(); i++){
-                map.move(animals.get(i % animals.size()), directions.get(i));
-                Platform.runLater(() -> {
-                    if (listener != null) {
-                        listener.mapChanged(map, "Animal moved to new position");
-                    }});
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
+    public void run() {
+        try {
+            Thread.sleep(1700); // pierwsza inicjalizacja potrzebuje mniej/wiecej tyle czasu zeby lapac wszystko
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+        for (int i = 0; i < directions.size(); i++) {
+            Animal animal = animals.get(i % animals.size());
+            Vector2d oldPosition = animal.getPosition(); // Pozycjaprzed ruchem
 
+            map.move(animal, directions.get(i)); // Ruch zwierzeca
+            Vector2d newPosition = animal.getPosition(); // Pozycja po ruchu
+
+            Platform.runLater(() -> {
+                if (listener != null) {
+                    listener.mapChanged(map, "Animal moved to new position");
+
+                    //dodanie informacji o zmianie pozycji
+                   // String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                   // System.out.printf("%s Animal was moved from position %s to position %s.%n",
+                           // timestamp, oldPosition, newPosition);
+                }
+            });
+
+            try {
+                Thread.sleep(500); // nie nadaza wizualizacja za algorytmem
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
+
     public List<Animal> getAnimals() {
-        return List.copyOf(animals); // collections.unmodifiableList
+        return Collections.unmodifiableList(animals); // collections.unmodifiableList
     }
 }
 
