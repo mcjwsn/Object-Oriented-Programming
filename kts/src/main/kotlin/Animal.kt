@@ -1,0 +1,38 @@
+package org.example
+
+import org.example.MapDirection
+import org.example.MoveDirection
+import org.example.Vector2d
+import org.example.toUnitVector
+
+class Animal (var position: Vector2d, var orientation: MapDirection, private var map: WorldMap) {
+
+    fun isAt(position2: Vector2d?): Boolean {
+        return position == position2
+    }
+    
+    fun move(direction: MoveDirection) {
+        when (direction) {
+            MoveDirection.RIGHT -> orientation = orientation.next()
+            MoveDirection.LEFT -> orientation = orientation.previous()
+            else->{
+                if (direction === MoveDirection.BACKWARD) {
+                   val newPosition: Vector2d= position - orientation.toUnitVector()
+                    if (map.canMoveTo(newPosition)) {
+                        position = newPosition
+                    }
+                }
+                val newLocation: Vector2d = position + orientation.toUnitVector()
+                if (map.canMoveTo(newLocation)) {
+                    position = newLocation
+                }
+        }}
+    }
+
+    override fun toString(): String = when (orientation) {
+            MapDirection.NORTH -> "N"
+            MapDirection.EAST -> "E"
+            MapDirection.SOUTH -> "S"
+            MapDirection.WEST -> "W"
+        }
+}
