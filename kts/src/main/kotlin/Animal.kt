@@ -2,10 +2,6 @@ package org.example
 
 class Animal (var position: Vector2d, var orientation: MapDirection, private var map: WorldMap) {
 
-    fun isAt(position2: Vector2d?): Boolean {
-        return position == position2
-    }
-
     fun move(direction: MoveDirection) {
         when (direction) {
             MoveDirection.RIGHT -> orientation = orientation.next()
@@ -30,4 +26,9 @@ class Animal (var position: Vector2d, var orientation: MapDirection, private var
             MapDirection.SOUTH -> "S"
             MapDirection.WEST -> "W"
         }
+
+    fun isAt(position2: Vector2d?): Boolean {
+        return position == position2
+    }
+
 }

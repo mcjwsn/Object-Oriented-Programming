@@ -8,25 +8,23 @@ class BouncyMap (private val height: Int = 0, private val width: Int = 0): World
     }
 
     override fun place(animal: Animal): Boolean {
-        // Usunięcie zwierzęcia, jeśli już istnieje na mapie
         animals.entries.removeIf { it.value == animal }
 
-        // Sprawdzenie czy pozycja jest zajęta
         if (!canMoveTo(animal.position)) {
             return false
         }
 
         if (!isOccupied(animal.position)) {
-            // Jeśli pozycja jest wolna, umieść zwierzę
             animals[animal.position] = animal
         } else {
-            // Jeśli pozycja zajęta, znajdź losową wolną pozycję
+
             val randomFree: Vector2d? = randomFreePosition(Vector2d(width, height), animals)
             if (randomFree != null) {
                 animal.position = randomFree
                 animals[randomFree] = animal
-            } else {
-                // Jeśli brak wolnych pozycji, zamień miejsce z losowym zwierzęciem
+            }
+            else {
+
                 val toSwap = randomPosition(animals)
                 if (toSwap == null){
                     return false
