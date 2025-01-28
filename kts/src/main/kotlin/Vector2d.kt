@@ -34,16 +34,6 @@ class Vector2d(val x: Int, val y: Int) {
         return Vector2d(min(x, other.x), min(y, other.y))
     }
 
-    @JvmName("getX1")
-    fun getX():Int {
-        return x;
-    }
-
-    @JvmName("getY1")
-    fun getY():Int {
-        return y;
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

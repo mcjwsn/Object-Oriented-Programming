@@ -1,6 +1,6 @@
 package org.example
 
-class Animal (var position: Vector2d, var orientation: MapDirection, private var map: WorldMap) {
+class Animal (var position: Vector2d, var orientation: MapDirection, private val map: WorldMap) {
 
     fun move(direction: MoveDirection) {
         when (direction) {
