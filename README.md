@@ -13,3 +13,6 @@ Repository contians:
 Java Simulation Application which simulats chosen number of animals moving on chosen size grass field. It is a demo version of project summarizing course, accesiable [here](https://github.com/mcjwsn/Simulation-Engine). The demo version allows for setting sequence of movements for chosen number of animals on chosen map.
 
 ### Screenshos from simulation
+
+<img src="https://github.com/user-attachments/assets/a6044696-c71e-4813-9cf9-2211980a5bd1" width="600" height = "400">
+<img src="https://github.com/user-attachments/assets/2f6930a9-acf7-43c7-90de-a7c477d0966f"  width="400" height = "400">
