@@ -14,5 +14,5 @@ Java Simulation Application which simulats chosen number of animals moving on ch
 
 ### Screenshos from simulation
 
-<img src="https://github.com/user-attachments/assets/a6044696-c71e-4813-9cf9-2211980a5bd1" width="600" height = "400">
-<img src="https://github.com/user-attachments/assets/2f6930a9-acf7-43c7-90de-a7c477d0966f"  width="400" height = "400">
+<img src="https://github.com/user-attachments/assets/a6044696-c71e-4813-9cf9-2211980a5bd1" width="450" height = "300">
+<img src="https://github.com/user-attachments/assets/2f6930a9-acf7-43c7-90de-a7c477d0966f"  width="300" height = "300">
